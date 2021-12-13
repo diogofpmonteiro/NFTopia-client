@@ -8,6 +8,7 @@ import Cart from "./../../components/Cart/Cart";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 // import ProductCard from "../../components/ProductCard/ProductCard";
 
@@ -47,9 +48,10 @@ const ProfilePage = () => {
         <Col>
           <div className='profile-right'>
             <Link to={`/user/edit/`}>
-              <button>Edit Profile</button>
+              <Button style={{ marginBottom: "10px" }}>Edit Profile</Button>
             </Link>
-            <button onClick={logOutUser}>Logout</button>
+            <br />
+            <Button onClick={logOutUser}>Logout</Button>
           </div>
         </Col>
       </Row>

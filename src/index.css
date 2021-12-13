@@ -7,16 +7,6 @@ a {
   color: black;
 }
 
-button,
-select {
-  padding: 5px 10px;
-  min-width: 50px;
-  margin: 5px;
-  font-size: 18px;
-  height: 40px;
-  border: none;
-}
-
 label {
   width: 200px;
   display: block;
@@ -32,39 +22,49 @@ nav {
 }
 
 .profile-img {
-  border-radius: 35px;
+  border-radius: 50px;
   width: 50px;
   height: 50px;
+  margin: 5px;
 }
 
 .logo-img {
-  width: 8vw;
+  width: 5vw;
 }
 
 .landing-section {
-  height: 80vh;
+  height: 70vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .main-img {
-  width: 50vw;
+  max-width: 35vw;
   margin: 10px;
   border-radius: 25px;
 }
 
+.App-light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.App-dark {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
 .recently-listed-section {
   display: flex;
-  align-items: center;
   overflow: scroll;
-  margin-bottom: 6vh;
 }
 
 .all-products-section {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   height: 50vh;
 }
 
@@ -74,6 +74,8 @@ nav {
 
 .navbar-toggler {
   height: 60px;
+  padding: 0px;
+  border-color: transparent;
 }
 
 .profile-top {
@@ -91,19 +93,43 @@ nav {
 }
 
 .profile-pic {
-  width: 25vw;
-  height: 25vh;
-  border-radius: 50px;
+  max-width: 40vw;
+  max-height: 40vh;
+  border-radius: 30px;
 }
 
 .nav-username-light {
   color: black;
+  margin-right: 1vw;
 }
 
 .nav-username-dark {
   color: white;
+  margin-right: 1vw;
 }
 
-.card {
+.card-dark {
+  width: 18rem;
   margin-right: 2vw;
+  margin-bottom: 3vh;
+  word-wrap: normal;
+  background-color: #212529;
+  color: #f8f9fa;
+  border-color: #f8f9fa;
+  align-items: center;
+}
+
+.card-light {
+  width: 18rem;
+  margin-right: 2vw;
+  margin-bottom: 3vh;
+  word-wrap: normal;
+  color: #212529;
+  background-color: #f8f9fa;
+  align-items: center;
+}
+
+.centered-column {
+  justify-content: center;
+  align-items: center;
 }

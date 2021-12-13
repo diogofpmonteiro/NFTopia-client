@@ -2,12 +2,12 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar/Navbar";
-import EditProfile from "./pages/EditProfilePage/EditProfile";
-import UploadProduct from "./components/UploadProduct/UploadProduct";
 
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 
+import EditProfile from "./pages/EditProfilePage/EditProfile";
+import UploadProduct from "./pages/UploadProduct/UploadProduct";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -15,9 +15,13 @@ import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ProductDetailsPage from "./pages/ProductDetailsPage/ProductDetailsPage";
 
+import { ThemeContext } from "./context/theme.context";
+import { useContext } from "react";
+
 function App() {
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className='App'>
+    <div className={`App-${theme}`}>
       <Navbar />
 
       <Routes>

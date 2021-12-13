@@ -45,24 +45,6 @@ const LoginPage = () => {
   };
 
   return (
-    // <div className='LoginPage'>
-    //   <h1>Login</h1>
-
-    //   <form onSubmit={handleLoginSubmit}>
-    //     <label>Username:</label>
-    //     <input type='text' name='username' value={username} onChange={handleUsername} />
-
-    //     <label>Password:</label>
-    //     <input type='password' name='password' value={password} onChange={handlePassword} />
-
-    //     <button type='submit'>Login</button>
-    //   </form>
-    //   {errorMessage && <p className='error-message'>{errorMessage}</p>}
-
-    //   <p>Don't have an account yet?</p>
-    //   <Link to={"/signup"}> Sign Up</Link>
-    // </div>
-
     <Container>
       <Row>
         <Col></Col>

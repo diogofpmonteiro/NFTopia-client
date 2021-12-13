@@ -1,12 +1,16 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Offcanvas from "react-bootstrap/Offcanvas";
+// import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+// import FormControl from "react-bootstrap/FormControl";
 
-import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
+import { ThemeContext } from "./../../context/theme.context";
 
 const API_URL = "http://localhost:5005";
 
@@ -15,6 +19,8 @@ const Header = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [profilePictureURL, setProfilePictureURL] = useState("");
+
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   useEffect(() => {
     try {
@@ -33,20 +39,15 @@ const Header = () => {
   }, [user]);
 
   return (
-    //   <>
-    //     {isLoggedIn && user && (
-    //       <Link to='/user'>
-    //         <img className='profile-img' src={user.profilePictureURL} alt='profile' />
-    //       </Link>
-    //     )}
-    //   </>
-    // </nav>
-
-    <Navbar bg='light' expand={false}>
+    <Navbar bg={theme} className='custom-nav' expand={false}>
       <Container fluid>
         <Navbar.Brand href='/'>
-          <img className='logo-img' src='/images/Logo_Art4Everyone_light.png' alt='logo' />
+          <img className='logo-img' src={`/images/Logo_Art4Everyone_${theme}.png`} alt='logo' />
         </Navbar.Brand>
+
+        <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme}>
+          {theme === "light" ? "dark 🌜" : "light 🟡"}
+        </Button>
 
         {!isLoggedIn && !user && (
           <>
@@ -67,8 +68,15 @@ const Header = () => {
 
         {isLoggedIn && user && (
           <>
+            {/* SEARCH BAR */}
+            {/* <div> 
+              <Form className='d-flex'>
+                <FormControl type='search' placeholder='Search' className='me-2' aria-label='Search' />
+                <Button variant='outline-dark'>Search</Button>
+              </Form>
+            </div> */}
             <div>
-              <span className='nav-username-light'>{username}</span>
+              <span className={`nav-username-${theme}`}>{username}</span>
               <Navbar.Toggle>
                 <img className='profile-img' src={profilePictureURL} alt='profile' />
               </Navbar.Toggle>

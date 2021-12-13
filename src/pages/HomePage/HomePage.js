@@ -1,16 +1,21 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "./../../context/theme.context";
+
 import ProductCard from "../../components/ProductCard/ProductCard";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 const API_URL = "http://localhost:5005";
-const mainPageImage = "/images/Everydays-Beeple.jpeg";
+const mainPageImage = "/images/main-img.jpeg";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,20 +27,28 @@ const HomePage = () => {
   }, []);
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <section className='landing-section'>
-            <div className='left-box'>
-              <h2>Welcome to Art4Everyone Marketplace</h2>
-              <p>The best mock art marketplace out there.</p>
-              <a href='#all-products'>Explore </a>
-            </div>
-            <div>
-              <img src={mainPageImage} alt='pic' className='main-img' />
-            </div>
-          </section>
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <section className='landing-section'>
+              <div className='left-box'>
+                <h2>Welcome to Art4Everyone Marketplace</h2>
+                <p>The best mock art marketplace out there.</p>
+                <Button href='#all-products' variant='secondary' style={{ width: "25vw" }}>
+                  Explore
+                </Button>
+              </div>
+              <div>
+                <img src={mainPageImage} alt='pic' className='main-img' />
+              </div>
+            </section>
+          </Col>
+        </Row>
+      </Container>
 
+      <Container className={`main-container-${theme}`}>
+        <Row>
           <hr />
           <h2 className='section-title'>Recently Listed Products</h2>
           <section className='recently-listed-section'>
@@ -44,19 +57,25 @@ const HomePage = () => {
               <ProductCard eachProduct={eachProduct} key={eachProduct._id} />
             ))}
           </section>
+        </Row>
+      </Container>
 
-          <hr />
-          <h2 id='all-products' className='section-title'>
-            All Products
-          </h2>
-          <section className='all-products-section'>
-            {products.map((eachProduct) => (
-              <ProductCard eachProduct={eachProduct} key={eachProduct._id} />
-            ))}
-          </section>
-        </Col>
-      </Row>
-    </Container>
+      <Container className={`main-container-${theme}`}>
+        <Row>
+          <Col>
+            <hr />
+            <h2 id='all-products' className='section-title'>
+              All Products
+            </h2>
+            <section className='all-products-section'>
+              {products.map((eachProduct) => (
+                <ProductCard eachProduct={eachProduct} key={eachProduct._id} />
+              ))}
+            </section>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

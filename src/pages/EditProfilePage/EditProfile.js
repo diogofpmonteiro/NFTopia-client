@@ -2,6 +2,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+
 import fileService from "../../services/file.service";
 
 const API_URL = "http://localhost:5005";
@@ -29,7 +36,7 @@ const EditProfile = () => {
     try {
       const uploadData = new FormData();
 
-      uploadData.append("profilePictureURL", e.target.files[0]); // <-- Set the file in the form
+      uploadData.append("imageURL", e.target.files[0]); // <-- Set the file in the form
 
       const response = await fileService.uploadImage(uploadData);
       setProfilePictureURL(response.data.secure_url);
@@ -55,35 +62,56 @@ const EditProfile = () => {
     }
   };
 
-  const deleteAccount = async () => {
-    // try {
-    //   const response = await authService.delete(user);
-    //   console.log(response);
-    // } catch (error) {
-    //   setErrorMessage("Something went wrong!");
-    // }
+  const deleteAccount = async (userId) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.delete(`${API_URL}/api/user/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
+
+      navigate("/");
+    } catch (error) {
+      setErrorMessage("Something went wrong!");
+    }
   };
 
   return (
-    <div className='EditProfile'>
-      <h1>Edit Profile</h1>
+    <Container>
+      <Row>
+        <Col></Col>
 
-      <form onSubmit={handleFormSubmit}>
-        <label>Username:</label>
-        <input type='text' name='username' value={username} onChange={handleUsername} />
+        <Col xs={6} className='centered-column'>
+          <Form onSubmit={handleFormSubmit} style={{ marginBottom: "20vh" }}>
+            <Form.Group className='mb-3'>
+              <Form.Label>Username</Form.Label>
+              <Form.Control type='text' placeholder='Enter username' name='username' value={username} onChange={handleUsername} />
+            </Form.Group>
 
-        <label>Profile Picture:</label>
-        <input type='file' name='imageURL' onChange={handleFileUpload} />
+            <Form.Group controlId='formFileSm' className='mb-3'>
+              <Form.Label>Profile Picture</Form.Label>
+              <Form.Control type='file' size='sm' onChange={handleFileUpload} />
+            </Form.Group>
 
-        <button type='submit'>Submit Changes</button>
-      </form>
+            <Button variant='primary' type='submit'>
+              Update Profile
+            </Button>
+            {errorMessage && <p className='error-message'>{errorMessage}</p>}
+          </Form>
 
-      <button type='submit' onSubmit={deleteAccount}>
-        Delete Account
-      </button>
+          <Card border='danger' style={{ margin: "auto" }}>
+            <Card.Header>Delete Account Zone</Card.Header>
+            <Card.Body>
+              <Card.Text>
+                Be careful, this action is very destructive. <br /> Click only if 100% sure.
+              </Card.Text>
+              <Button variant='danger' type='submit' onClick={deleteAccount}>
+                Delete Account
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
 
-      {errorMessage && <p className='error-message'>{errorMessage}</p>}
-    </div>
+        <Col></Col>
+      </Row>
+    </Container>
   );
 };
 

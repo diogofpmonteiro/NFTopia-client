@@ -85,28 +85,6 @@ const SignupPage = () => {
         <Col></Col>
       </Row>
     </Container>
-
-    //   <div className=''>
-    //    <h1>Sign Up</h1>
-
-    //   <form onSubmit={handleSignupSubmit}>
-    //     <label>Username:</label>
-    //     <input type='text' name='username' value={username} onChange={handleUsername} />
-
-    //     <label>Password:</label>
-    //     <input type='password' name='password' value={password} onChange={handlePassword} />
-
-    //     <label>Profile Picture:</label>
-    //     <input type='file' onChange={handleFileUpload} />
-
-    //     <button type='submit'>Sign Up</button>
-    //   </form>
-
-    //   {errorMessage && <p className='error-message'>{errorMessage}</p>}
-
-    //   <p>Already have account?</p>
-    // <Link to={"/login"}> Login</Link>
-    // </div>
   );
 };
 

@@ -1,12 +1,16 @@
 import React, { createContext, useState, useEffect } from "react";
 import authService from "../services/auth.service";
 
+import { useNavigate } from "react-router-dom";
+
 const AuthContext = createContext();
 
 function AuthProviderWrapper({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   const verifyStoredToken = async () => {
     try {
@@ -43,6 +47,8 @@ function AuthProviderWrapper({ children }) {
     // Update state variables
     setIsLoggedIn(false);
     setUser(null);
+
+    navigate("/");
   };
 
   useEffect(() => {
