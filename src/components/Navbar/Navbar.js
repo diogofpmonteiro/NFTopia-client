@@ -45,12 +45,11 @@ const Header = () => {
           <img className='logo-img' src={`/images/Logo_Art4Everyone_${theme}.png`} alt='logo' />
         </Navbar.Brand>
 
-        <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme}>
-          {theme === "light" ? "dark 🌜" : "light 🟡"}
-        </Button>
-
         {!isLoggedIn && !user && (
           <>
+            <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme}>
+              {theme === "light" ? "dark 🌜" : "light 🟡"}
+            </Button>
             <Navbar.Toggle></Navbar.Toggle>
             <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='end'>
               <Offcanvas.Header closeButton>
@@ -76,6 +75,9 @@ const Header = () => {
               </Form>
             </div> */}
             <div>
+              <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme}>
+                {theme === "light" ? "dark 🌜" : "light 🟡"}
+              </Button>
               <span className={`nav-username-${theme}`}>{username}</span>
               <Navbar.Toggle>
                 <img className='profile-img' src={profilePictureURL} alt='profile' />

@@ -89,7 +89,7 @@ const UploadProduct = () => {
               <Form.Control type='number' placeholder='Enter product price' name='price' value={price} onChange={handlePrice} />
             </Form.Group>
 
-            <Button variant='primary' type='submit'>
+            <Button variant='secondary' type='submit'>
               Create Product
             </Button>
             {errorMessage && <p className='error-message'>{errorMessage}</p>}

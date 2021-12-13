@@ -74,6 +74,7 @@ nav {
 
 .navbar-toggler {
   height: 60px;
+  width: 60px;
   padding: 0px;
   border-color: transparent;
 }
@@ -101,11 +102,13 @@ nav {
 .nav-username-light {
   color: black;
   margin-right: 1vw;
+  margin-left: 5vw;
 }
 
 .nav-username-dark {
   color: white;
   margin-right: 1vw;
+  margin-left: 5vw;
 }
 
 .card-dark {
@@ -132,4 +135,22 @@ nav {
 .centered-column {
   justify-content: center;
   align-items: center;
+}
+
+.danger-zone-light  {
+  margin: auto;
+  color: #212529;
+  background-color: #f8f9fa;
+}
+
+.danger-zone-dark {
+  margin: auto;
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+.product-details-img {
+  max-width: 40vw;
+  max-height: 40vh;
+  border-radius: 25px;
 }

@@ -48,10 +48,14 @@ const ProfilePage = () => {
         <Col>
           <div className='profile-right'>
             <Link to={`/user/edit/`}>
-              <Button style={{ marginBottom: "10px" }}>Edit Profile</Button>
+              <Button style={{ marginBottom: "10px" }} variant='secondary'>
+                Edit Profile
+              </Button>
             </Link>
             <br />
-            <Button onClick={logOutUser}>Logout</Button>
+            <Button onClick={logOutUser} variant='secondary'>
+              Logout
+            </Button>
           </div>
         </Col>
       </Row>

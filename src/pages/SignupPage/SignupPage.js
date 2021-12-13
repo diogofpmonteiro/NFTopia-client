@@ -72,7 +72,7 @@ const SignupPage = () => {
               <Form.Control type='file' size='sm' onChange={handleFileUpload} />
             </Form.Group>
 
-            <Button variant='primary' type='submit'>
+            <Button variant='secondary' type='submit'>
               Login
             </Button>
           </Form>

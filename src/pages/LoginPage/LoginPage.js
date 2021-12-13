@@ -63,7 +63,7 @@ const LoginPage = () => {
             <Form.Group className='mb-3' controlId='formBasicCheckbox'>
               <Form.Check type='checkbox' label='Remember me' />
             </Form.Group>
-            <Button variant='primary' type='submit'>
+            <Button variant='secondary' type='submit'>
               Login
             </Button>
           </Form>

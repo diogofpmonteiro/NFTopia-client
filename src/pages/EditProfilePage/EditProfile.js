@@ -11,6 +11,9 @@ import Card from "react-bootstrap/Card";
 
 import fileService from "../../services/file.service";
 
+import { ThemeContext } from "./../../context/theme.context";
+import { useContext } from "react";
+
 const API_URL = "http://localhost:5005";
 
 const EditProfile = () => {
@@ -19,6 +22,8 @@ const EditProfile = () => {
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
+
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +70,7 @@ const EditProfile = () => {
   const deleteAccount = async (userId) => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.delete(`${API_URL}/api/user/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`${API_URL}/api/user/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
 
       navigate("/");
     } catch (error) {
@@ -90,13 +95,13 @@ const EditProfile = () => {
               <Form.Control type='file' size='sm' onChange={handleFileUpload} />
             </Form.Group>
 
-            <Button variant='primary' type='submit'>
+            <Button variant='secondary' type='submit'>
               Update Profile
             </Button>
             {errorMessage && <p className='error-message'>{errorMessage}</p>}
           </Form>
 
-          <Card border='danger' style={{ margin: "auto" }}>
+          <Card border='danger' className={`danger-zone-${theme}`}>
             <Card.Header>Delete Account Zone</Card.Header>
             <Card.Body>
               <Card.Text>
