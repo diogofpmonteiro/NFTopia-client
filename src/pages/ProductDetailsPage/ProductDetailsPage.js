@@ -11,20 +11,19 @@ const ProductDetailsPage = () => {
 
   const { productId } = useParams();
 
-  const getProduct = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/api/products/${productId}`);
-      const thisProduct = response.data;
-
-      setProduct(thisProduct);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/products/${productId}`);
+        const thisProduct = response.data;
+
+        setProduct(thisProduct);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getProduct();
-  }, []);
+  }, [productId]);
 
   return (
     <>
