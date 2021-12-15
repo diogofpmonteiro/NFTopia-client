@@ -63,7 +63,7 @@ const ProfilePage = () => {
       </Row>
       <Row>
         <Col xs={12}>
-          <h2 className='cart-section-profile-title'>My Cart</h2>
+          <h2 className='cart-section-profile-title'>Favorite Products</h2>
           <div>{userData && <Cart cartId={userData.cart[0]} />}</div>
         </Col>
       </Row>

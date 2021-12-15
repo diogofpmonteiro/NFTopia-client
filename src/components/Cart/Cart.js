@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 
-import { ThemeContext } from "./../../context/theme.context";
 import { AuthContext } from "../../context/auth.context";
 
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -11,7 +10,6 @@ const API_URL = "http://localhost:5005";
 const Cart = ({ cartId }) => {
   const [productsInCart, setProductsInCart] = useState([]);
 
-  const { theme } = useContext(ThemeContext);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {

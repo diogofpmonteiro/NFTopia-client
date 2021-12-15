@@ -54,13 +54,17 @@ const Header = () => {
               <Navbar.Toggle></Navbar.Toggle>
             </div>
             <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='end'>
-              <Offcanvas.Header closeButton>
+              <Offcanvas.Header className={`offcanvas-header-${theme}`} closeButton>
                 <Offcanvas.Title id='offcanvasNavbarLabel'>Menu</Offcanvas.Title>
               </Offcanvas.Header>
-              <Offcanvas.Body>
+              <Offcanvas.Body className={`offcanvas-body-${theme}`}>
                 <Nav className='justify-content-end flex-grow-1 pe-3'>
-                  <Nav.Link href='/login'>Login</Nav.Link>
-                  <Nav.Link href='/signup'>Sign-up</Nav.Link>
+                  <Nav.Link className={`nav-link-${theme}`} href='/login'>
+                    Login
+                  </Nav.Link>
+                  <Nav.Link className={`nav-link-${theme}`} href='/signup'>
+                    Sign-up
+                  </Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
@@ -86,7 +90,7 @@ const Header = () => {
               </Navbar.Toggle>
             </div>
             <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='end'>
-              <Offcanvas.Header closeButton className={`offcanvas-header-${theme}`}>
+              <Offcanvas.Header className={`offcanvas-header-${theme}`} closeButton>
                 <Offcanvas.Title id='offcanvasNavbarLabel'>Menu</Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body className={`offcanvas-body-${theme}`}>

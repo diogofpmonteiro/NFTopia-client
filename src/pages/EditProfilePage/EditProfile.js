@@ -10,9 +10,6 @@ import Button from "react-bootstrap/Button";
 
 import fileService from "../../services/file.service";
 
-import { ThemeContext } from "./../../context/theme.context";
-import { useContext } from "react";
-
 const API_URL = "http://localhost:5005";
 
 const EditProfile = () => {

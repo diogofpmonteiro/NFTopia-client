@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
@@ -9,8 +9,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import fileService from "../../services/file.service";
-
-import { ThemeContext } from "./../../context/theme.context";
 
 const API_URL = "http://localhost:5005";
 
@@ -37,7 +35,7 @@ const EditProductPage = () => {
       setPrice(response.data.price);
     };
     fetchData();
-  }, []);
+  }, [productId]);
 
   const handleName = async (e) => setName(e.target.value);
   const handleDescription = async (e) => setDescription(e.target.value);
@@ -101,7 +99,7 @@ const EditProductPage = () => {
             </Form.Group>
 
             <Button variant='secondary' type='submit'>
-              Update Profile
+              Update Product
             </Button>
             {errorMessage && <p className='error-message'>{errorMessage}</p>}
           </Form>

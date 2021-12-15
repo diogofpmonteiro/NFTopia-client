@@ -14,10 +14,14 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ProductDetailsPage from "./pages/ProductDetailsPage/ProductDetailsPage";
+import Success from "./pages/Success/Success";
+import Cancel from "./pages/Cancel/Cancel";
 import EditProductPage from "./pages/EditProductPage/EditProductPage";
 
 import { ThemeContext } from "./context/theme.context";
 import { useContext } from "react";
+
+import "@stripe/stripe-js";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -75,6 +79,26 @@ function App() {
           element={
             <IsPrivate>
               <ProductDetailsPage />
+            </IsPrivate>
+          }
+        />
+
+        {/* Success after purchase Route */}
+        <Route
+          path='/success'
+          element={
+            <IsPrivate>
+              <Success />
+            </IsPrivate>
+          }
+        />
+
+        {/* Purchase canceled Route */}
+        <Route
+          path='/cancel'
+          element={
+            <IsPrivate>
+              <Cancel />
             </IsPrivate>
           }
         />

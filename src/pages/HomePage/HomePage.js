@@ -33,9 +33,11 @@ const HomePage = () => {
     fetchData();
   }, []);
 
+  const sortedProducts = [].concat(products).sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+
   return (
     <>
-      <Container>
+      <Container className={`main-container-${theme}`}>
         <Row>
           <Col>
             <section className='landing-section'>
@@ -52,29 +54,25 @@ const HomePage = () => {
             </section>
           </Col>
         </Row>
-      </Container>
 
-      <div className={`main-container-${theme}`}>
         <h2 className='section-title recently-listed-title '>
           <hr />
           Recently Listed Products
         </h2>
         <section className='recently-listed-section'>
           {/* NEEDS TO BE SORTED BY TIMESTAMP */}
-          {products.map((eachProduct) => (
+          {sortedProducts.map((eachProduct) => (
             <div className='recently-listed-cards'>
               <ProductCard eachProduct={eachProduct} key={eachProduct._id} />
             </div>
           ))}
         </section>
-      </div>
 
-      <Container className={`main-container-${theme}`}>
         <Row>
           <Col>
-            <hr />
             <h2 id='all-products' className='section-title'>
-              All Products
+              <hr />
+              Gallery
             </h2>
             <section className='all-products-section'>
               {products.map((eachProduct) => (
@@ -83,11 +81,11 @@ const HomePage = () => {
             </section>
           </Col>
         </Row>
-      </Container>
 
-      <Button onClick={scrollToTop} variant='secondary'>
-        Top
-      </Button>
+        <Button onClick={scrollToTop} variant='secondary'>
+          Top
+        </Button>
+      </Container>
     </>
   );
 };
