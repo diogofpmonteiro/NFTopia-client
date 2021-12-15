@@ -54,7 +54,7 @@ const SignupPage = () => {
       <Row>
         <Col></Col>
 
-        <Col xs={6}>
+        <Col xs={6} className='signup-form'>
           <Form onSubmit={handleSignupSubmit}>
             <Form.Group className='mb-3'>
               <Form.Label>Username</Form.Label>
@@ -73,7 +73,7 @@ const SignupPage = () => {
             </Form.Group>
 
             <Button variant='secondary' type='submit'>
-              Login
+              Sign up
             </Button>
           </Form>
           {errorMessage && <p className='error-message'>{errorMessage}</p>}

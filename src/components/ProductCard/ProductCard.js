@@ -9,7 +9,7 @@ import { useContext } from "react";
 const ProductCard = ({ eachProduct }) => {
   const { theme } = useContext(ThemeContext);
   return (
-    <Card className={`card-${theme}`}>
+    <Card className={`card-${theme}`} key={eachProduct._id}>
       <Card.Img variant='top' src={eachProduct.productImageURL} />
       <Card.Body>
         <Card.Title>{eachProduct.name}</Card.Title>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "./../../context/theme.context";
 
-import ProductCard from "../../components/ProductCard/ProductCard";
+import ProductCard from "./../../components/ProductCard/ProductCard";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -16,6 +16,13 @@ const HomePage = () => {
   const [products, setProducts] = useState([]);
 
   const { theme } = useContext(ThemeContext);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,18 +54,20 @@ const HomePage = () => {
         </Row>
       </Container>
 
-      <Container className={`main-container-${theme}`}>
-        <Row>
+      <div className={`main-container-${theme}`}>
+        <h2 className='section-title recently-listed-title '>
           <hr />
-          <h2 className='section-title'>Recently Listed Products</h2>
-          <section className='recently-listed-section'>
-            {/* NEEDS TO BE SORTED BY TIMESTAMP */}
-            {products.map((eachProduct) => (
+          Recently Listed Products
+        </h2>
+        <section className='recently-listed-section'>
+          {/* NEEDS TO BE SORTED BY TIMESTAMP */}
+          {products.map((eachProduct) => (
+            <div className='recently-listed-cards'>
               <ProductCard eachProduct={eachProduct} key={eachProduct._id} />
-            ))}
-          </section>
-        </Row>
-      </Container>
+            </div>
+          ))}
+        </section>
+      </div>
 
       <Container className={`main-container-${theme}`}>
         <Row>
@@ -75,6 +84,10 @@ const HomePage = () => {
           </Col>
         </Row>
       </Container>
+
+      <Button onClick={scrollToTop} variant='secondary'>
+        Top
+      </Button>
     </>
   );
 };

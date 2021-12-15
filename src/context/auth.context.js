@@ -21,10 +21,10 @@ function AuthProviderWrapper({ children }) {
         const response = await authService.verify();
 
         // If the token is valid, update the state variables
-        const user = response.data; // coming from payload
+        const userData = response.data; // coming from payload
         setIsLoggedIn(true);
         setIsLoading(false);
-        setUser(user);
+        setUser(userData);
       } else {
         setIsLoading(false);
       }

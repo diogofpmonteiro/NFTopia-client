@@ -14,6 +14,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ProductDetailsPage from "./pages/ProductDetailsPage/ProductDetailsPage";
+import EditProductPage from "./pages/EditProductPage/EditProductPage";
 
 import { ThemeContext } from "./context/theme.context";
 import { useContext } from "react";
@@ -84,6 +85,16 @@ function App() {
           element={
             <IsPrivate>
               <UploadProduct />
+            </IsPrivate>
+          }
+        />
+
+        {/* Edit Product Route */}
+        <Route
+          path='/:productId/edit'
+          element={
+            <IsPrivate>
+              <EditProductPage />
             </IsPrivate>
           }
         />

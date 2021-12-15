@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../context/auth.context";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+
+import { AuthContext } from "../../context/auth.context";
 
 import Cart from "./../../components/Cart/Cart";
 
@@ -10,14 +11,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-// import ProductCard from "../../components/ProductCard/ProductCard";
-
 const API_URL = "http://localhost:5005";
 
 const ProfilePage = () => {
-  const { logOutUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [profilePictureURL, setProfilePictureURL] = useState("");
+  const [userData, setUserData] = useState(null);
+
+  const { logOutUser } = useContext(AuthContext);
 
   useEffect(() => {
     try {
@@ -28,6 +29,7 @@ const ProfilePage = () => {
         const thisUser = response.data;
         setUsername(thisUser.username);
         setProfilePictureURL(thisUser.profilePictureURL);
+        setUserData(thisUser);
       };
       fetchData();
     } catch (error) {
@@ -60,13 +62,10 @@ const ProfilePage = () => {
         </Col>
       </Row>
       <Row>
-        <Col></Col>
-        <Col xs={5}>
-          <div className='profile-bottom'>
-            <Cart />
-          </div>
+        <Col xs={12}>
+          <h2 className='cart-section-profile-title'>My Cart</h2>
+          <div>{userData && <Cart cartId={userData.cart[0]} />}</div>
         </Col>
-        <Col></Col>
       </Row>
     </Container>
   );

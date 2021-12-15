@@ -47,10 +47,12 @@ const Header = () => {
 
         {!isLoggedIn && !user && (
           <>
-            <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme}>
-              {theme === "light" ? "dark 🌜" : "light 🟡"}
-            </Button>
-            <Navbar.Toggle></Navbar.Toggle>
+            <div>
+              <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme} className='theme-btn'>
+                {theme === "light" ? "dark 🌜" : "light 🟡"}
+              </Button>
+              <Navbar.Toggle></Navbar.Toggle>
+            </div>
             <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='end'>
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id='offcanvasNavbarLabel'>Menu</Offcanvas.Title>
@@ -75,7 +77,7 @@ const Header = () => {
               </Form>
             </div> */}
             <div>
-              <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme}>
+              <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme} className='theme-btn'>
                 {theme === "light" ? "dark 🌜" : "light 🟡"}
               </Button>
               <span className={`nav-username-${theme}`}>{username}</span>
@@ -84,15 +86,21 @@ const Header = () => {
               </Navbar.Toggle>
             </div>
             <Navbar.Offcanvas id='offcanvasNavbar' aria-labelledby='offcanvasNavbarLabel' placement='end'>
-              <Offcanvas.Header closeButton>
+              <Offcanvas.Header closeButton className={`offcanvas-header-${theme}`}>
                 <Offcanvas.Title id='offcanvasNavbarLabel'>Menu</Offcanvas.Title>
               </Offcanvas.Header>
-              <Offcanvas.Body>
+              <Offcanvas.Body className={`offcanvas-body-${theme}`}>
                 <Nav className='justify-content-end flex-grow-1 pe-3'>
-                  <Nav.Link href='/user'>My profile</Nav.Link>
+                  <Nav.Link className={`nav-link-${theme}`} href='/user'>
+                    My profile
+                  </Nav.Link>
                   {/* ADMIN FEATURE! */}
-                  <Nav.Link href='/products/new/'>Create a product</Nav.Link>
-                  <Nav.Link onClick={logOutUser}>Log Out</Nav.Link>
+                  <Nav.Link className={`nav-link-${theme}`} href='/products/new/'>
+                    Create a product
+                  </Nav.Link>
+                  <Nav.Link className={`nav-link-${theme}`} onClick={logOutUser}>
+                    Log Out
+                  </Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

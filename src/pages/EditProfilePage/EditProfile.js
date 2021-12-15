@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 
 import fileService from "../../services/file.service";
 
@@ -23,7 +22,7 @@ const EditProfile = () => {
 
   const navigate = useNavigate();
 
-  const { theme } = useContext(ThemeContext);
+  // const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,23 +66,12 @@ const EditProfile = () => {
     }
   };
 
-  const deleteAccount = async (userId) => {
-    try {
-      const token = localStorage.getItem("authToken");
-      await axios.delete(`${API_URL}/api/user/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
-
-      navigate("/");
-    } catch (error) {
-      setErrorMessage("Something went wrong!");
-    }
-  };
-
   return (
     <Container>
       <Row>
         <Col></Col>
 
-        <Col xs={6} className='centered-column'>
+        <Col xs={6} className='centered-column edit-profile-container'>
           <Form onSubmit={handleFormSubmit} style={{ marginBottom: "20vh" }}>
             <Form.Group className='mb-3'>
               <Form.Label>Username</Form.Label>
@@ -100,18 +88,6 @@ const EditProfile = () => {
             </Button>
             {errorMessage && <p className='error-message'>{errorMessage}</p>}
           </Form>
-
-          <Card border='danger' className={`danger-zone-${theme}`}>
-            <Card.Header>Delete Account Zone</Card.Header>
-            <Card.Body>
-              <Card.Text>
-                Be careful, this action is very destructive. <br /> Click only if 100% sure.
-              </Card.Text>
-              <Button variant='danger' type='submit' onClick={deleteAccount}>
-                Delete Account
-              </Button>
-            </Card.Body>
-          </Card>
         </Col>
 
         <Col></Col>

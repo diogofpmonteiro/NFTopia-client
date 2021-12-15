@@ -57,19 +57,26 @@ nav {
 
 .recently-listed-section {
   display: flex;
-  overflow: scroll;
+}
+
+.recently-listed-cards {
+  margin: 0 20px;
 }
 
 .all-products-section {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  height: 50vh;
+  justify-content: space-evenly;
 }
 
 .section-title {
   margin: 25px 0px;
+}
+
+.recently-listed-title {
+  margin: 0 100px;
+  margin-bottom: 23px;
 }
 
 .navbar-toggler {
@@ -86,11 +93,17 @@ nav {
   align-items: center;
 }
 
-.profile-bottom {
-  margin-top: 50px;
+.cart-section-profile-title {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 23px;
+}
+
+.cart-section-profile {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  min-height: 50vh;
+  justify-content: space-around;
 }
 
 .profile-pic {
@@ -102,18 +115,19 @@ nav {
 .nav-username-light {
   color: black;
   margin-right: 1vw;
-  margin-left: 5vw;
 }
 
 .nav-username-dark {
   color: white;
   margin-right: 1vw;
-  margin-left: 5vw;
+}
+
+.theme-btn {
+  margin-right: 5vw;
 }
 
 .card-dark {
-  width: 18rem;
-  margin-right: 2vw;
+  width: 17rem;
   margin-bottom: 3vh;
   word-wrap: normal;
   background-color: #212529;
@@ -123,8 +137,7 @@ nav {
 }
 
 .card-light {
-  width: 18rem;
-  margin-right: 2vw;
+  width: 17rem;
   margin-bottom: 3vh;
   word-wrap: normal;
   color: #212529;
@@ -153,4 +166,39 @@ nav {
   max-width: 40vw;
   max-height: 40vh;
   border-radius: 25px;
+}
+
+.edit-profile-container,
+.create-product-container,
+.login-form,
+.signup-form,
+.product-details-container {
+  height: 90vh;
+}
+
+.offcanvas-header-light {
+  color: #212529;
+  background-color: #f8f9fa;
+}
+
+.offcanvas-header-dark {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+.offcanvas-body-light {
+  color: #212529;
+  background-color: #f8f9fa;
+}
+.offcanvas-body-dark {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+.nav-link-light {
+  color: #212529;
+}
+
+.nav-link-dark {
+  color: #f8f9fa;
 }

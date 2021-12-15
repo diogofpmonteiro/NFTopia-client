@@ -49,7 +49,7 @@ const LoginPage = () => {
       <Row>
         <Col></Col>
 
-        <Col xs={6}>
+        <Col xs={6} className='login-form'>
           <Form onSubmit={handleLoginSubmit}>
             <Form.Group className='mb-3'>
               <Form.Label>Username</Form.Label>

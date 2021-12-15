@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,18 +10,38 @@ import Button from "react-bootstrap/Button";
 
 import fileService from "../../services/file.service";
 
+import { ThemeContext } from "./../../context/theme.context";
+
 const API_URL = "http://localhost:5005";
 
-const UploadProduct = () => {
+const EditProductPage = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [productImageURL, setProductImageURL] = useState("");
   const [price, setPrice] = useState("");
+  const [productImageURL, setProductImageURL] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const handleName = (e) => setName(e.target.value);
-  const handleDescription = (e) => setDescription(e.target.value);
-  const handlePrice = (e) => setPrice(e.target.value);
+  const { productId } = useParams();
+
+  const navigate = useNavigate();
+
+  // const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const authToken = localStorage.getItem("authToken");
+      const response = await axios.get(`${API_URL}/api/products/${productId}`, { headers: { Authorization: `Bearer ${authToken}` } });
+
+      setName(response.data.name);
+      setDescription(response.data.description);
+      setPrice(response.data.price);
+    };
+    fetchData();
+  }, []);
+
+  const handleName = async (e) => setName(e.target.value);
+  const handleDescription = async (e) => setDescription(e.target.value);
+  const handlePrice = async (e) => setPrice(e.target.value);
 
   const handleFileUpload = async (e) => {
     try {
@@ -30,7 +50,6 @@ const UploadProduct = () => {
       uploadData.append("imageURL", e.target.files[0]); // <-- Set the file in the form
 
       const response = await fileService.uploadImage(uploadData);
-
       setProductImageURL(response.data.secure_url);
     } catch (error) {
       setErrorMessage("Failed to upload the file");
@@ -44,53 +63,45 @@ const UploadProduct = () => {
       const requestBody = { name, description, productImageURL, price };
 
       const authToken = localStorage.getItem("authToken");
-      await axios.post(`${API_URL}/api/products/`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
+      await axios.put(`${API_URL}/api/products/${productId}`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
 
       // If the request is successful navigate to login page
-      navigate("/user");
+      navigate("/");
     } catch (error) {
       // If the request resolves with an error, set the error message in the state
       setErrorMessage("Something went wrong");
     }
   };
 
-  const navigate = useNavigate();
-
   return (
     <Container>
       <Row>
         <Col></Col>
 
-        <Col xs={6} className='centered-column create-product-container'>
+        <Col xs={6} className='centered-column edit-profile-container'>
           <Form onSubmit={handleFormSubmit} style={{ marginBottom: "20vh" }}>
             <Form.Group className='mb-3'>
-              <Form.Label>Product Name</Form.Label>
-              <Form.Control type='text' placeholder='Enter product name' name='name' value={name} onChange={handleName} />
+              <Form.Label>Name</Form.Label>
+              <Form.Control type='text' name='name' value={name} onChange={handleName} />
             </Form.Group>
 
             <Form.Group className='mb-3'>
-              <Form.Label>Product Description</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter product description'
-                name='description'
-                value={description}
-                onChange={handleDescription}
-              />
+              <Form.Label>Description</Form.Label>
+              <Form.Control type='text' name='description' value={description} onChange={handleDescription} />
             </Form.Group>
 
             <Form.Group controlId='formFileSm' className='mb-3'>
-              <Form.Label>Product Image</Form.Label>
+              <Form.Label>Profile Picture</Form.Label>
               <Form.Control type='file' size='sm' onChange={handleFileUpload} />
             </Form.Group>
 
             <Form.Group className='mb-3'>
-              <Form.Label>Product Price</Form.Label>
-              <Form.Control type='number' placeholder='Enter product price' name='price' value={price} onChange={handlePrice} />
+              <Form.Label>Price</Form.Label>
+              <Form.Control type='number' name='name' value={price} onChange={handlePrice} />
             </Form.Group>
 
             <Button variant='secondary' type='submit'>
-              Create Product
+              Update Profile
             </Button>
             {errorMessage && <p className='error-message'>{errorMessage}</p>}
           </Form>
@@ -98,29 +109,8 @@ const UploadProduct = () => {
 
         <Col></Col>
       </Row>
-      <div></div>
     </Container>
-
-    // <div>
-    //   <h1>Upload a Product to your wallet</h1>
-    //   <form onSubmit={handleFormSubmit}>
-    //     <label>Name:</label>
-    //     <input type='text' name='Name' value={name} onChange={handleName} />
-
-    //     <label>description:</label>
-    //     <input type='text' name='description' value={description} onChange={handleDescription} />
-
-    //     <label>Product Image</label>
-    //     <input type='file' name='imageURL' onChange={handleFileUpload} />
-
-    //     <label>Price:</label>
-    //     <input type='number' name='price' value={price} onChange={handlePrice} />
-
-    //     <button type='submit'>Create Product</button>
-    //   </form>
-    //   {errorMessage && <p className='error-message'>{errorMessage}</p>}
-    // </div>
   );
 };
 
-export default UploadProduct;
+export default EditProductPage;
