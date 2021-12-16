@@ -10,12 +10,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 
-// Stripe import
 import { loadStripe } from "@stripe/stripe-js";
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
-// Stripe functionalities
 let stripePromise;
 
 const getStripe = () => {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";

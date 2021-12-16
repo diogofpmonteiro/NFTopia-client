@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 import fileService from "../../services/file.service";
 
@@ -60,14 +61,18 @@ const SignupPage = ({ theme }) => {
         <Col xs={6} className='signup-form'>
           <Form onSubmit={handleSignupSubmit}>
             <Form.Group className='mb-3'>
-              <Form.Label>Username</Form.Label>
-              <Form.Control type='text' placeholder='Enter username' name='username' value={username} onChange={handleUsername} />
+              <FloatingLabel controlId='floatingInput' label='Username' className={`mb-3 form-input-title-${theme}`}>
+                <Form.Control type='text' placeholder='Enter username' name='username' value={username} onChange={handleUsername} />
+              </FloatingLabel>
             </Form.Group>
 
-            <Form.Group className='mb-3' controlId='formBasicPassword'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control type='password' placeholder='Password' name='password' value={password} onChange={handlePassword} />
-              <Form.Text className='text-muted'>(Capital letter, number, symbol, min. 6 characters)</Form.Text>
+            <Form.Group controlId='formBasicPassword' className={`mb-3 form-input-title-${theme}`}>
+              <FloatingLabel controlId='floatingPassword' label='Password'>
+                <Form.Control type='password' placeholder='Password' name='password' value={password} onChange={handlePassword} />
+              </FloatingLabel>
+              <Form.Text className={`text-muted form-input-title-${theme}`} muted>
+                (Capital letter, number, symbol, min. 6 characters)
+              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId='formFileSm' className='mb-3'>

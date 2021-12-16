@@ -23,13 +23,13 @@ import EditProductPage from "./pages/EditProductPage/EditProductPage";
 import "@stripe/stripe-js";
 
 function App() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
 
   const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    } else {
+    if (theme === "dark") {
       setTheme("light");
+    } else {
+      setTheme("dark");
     }
   };
 

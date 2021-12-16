@@ -51,16 +51,12 @@ const EditProfile = ({ theme }) => {
   const handleFormSubmit = async (e) => {
     try {
       e.preventDefault();
-      // Create an object representing the request body
       const requestBody = { username, profilePictureURL };
-
       const authToken = localStorage.getItem("authToken");
       await axios.put(`${API_URL}/api/user`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
 
-      // If the request is successful navigate to login page
       navigate("/user");
     } catch (error) {
-      // If the request resolves with an error, set the error message in the state
       setErrorMessage("Something went wrong");
     }
   };

@@ -15,7 +15,7 @@ const API_URL = process.env.REACT_APP_SERVER_URL;
 
 const Header = ({ theme, toggleTheme }) => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState(""); commented out until implemented properly
   const [profilePictureURL, setProfilePictureURL] = useState("");
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Header = ({ theme, toggleTheme }) => {
         const response = await axios.get(`${API_URL}/api/user`, { headers: { Authorization: `Bearer ${authToken}` } });
 
         const thisUser = response.data;
-        setUsername(thisUser.username);
+        // setUsername(thisUser.username);
         setProfilePictureURL(thisUser.profilePictureURL);
       };
       fetchData();
@@ -45,7 +45,11 @@ const Header = ({ theme, toggleTheme }) => {
           <>
             <div>
               <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme} className='theme-btn'>
-                {theme === "light" ? "dark 🌜" : "light 🟡"}
+                {theme === "light" ? (
+                  <img className='theme-btn-img' src={`/images/dark-mode-icon.png`} alt='icon' />
+                ) : (
+                  <img className='theme-btn-img' src={`/images/light-mode-icon.png`} alt='icon' />
+                )}
               </Button>
               <Navbar.Toggle></Navbar.Toggle>
             </div>
@@ -60,6 +64,9 @@ const Header = ({ theme, toggleTheme }) => {
                   </Nav.Link>
                   <Nav.Link className={`nav-link-${theme}`} href='/signup'>
                     Sign-up
+                  </Nav.Link>
+                  <Nav.Link className={`nav-link-${theme}`} disabled>
+                    Connect with wallet (Coming soon..)
                   </Nav.Link>
                 </Nav>
               </Offcanvas.Body>
@@ -78,9 +85,13 @@ const Header = ({ theme, toggleTheme }) => {
             </div> */}
             <div>
               <Button variant={theme === "light" ? "outline-dark" : "outline-light"} onClick={toggleTheme} className='theme-btn'>
-                {theme === "light" ? "dark 🌜" : "light 🟡"}
+                {theme === "light" ? (
+                  <img className='theme-btn-img' src={`/images/dark-mode-icon.png`} alt='icon' />
+                ) : (
+                  <img className='theme-btn-img' src={`/images/light-mode-icon.png`} alt='icon' />
+                )}
               </Button>
-              <span className={`nav-username-${theme}`}>{username}</span>
+              {/* <span className={`nav-username-${theme}`}>{username}</span> */}
               <Navbar.Toggle>
                 <img className='profile-img' src={profilePictureURL} alt='profile' />
               </Navbar.Toggle>
@@ -97,6 +108,13 @@ const Header = ({ theme, toggleTheme }) => {
                   {/* ADMIN FEATURE! */}
                   <Nav.Link className={`nav-link-${theme}`} href='/products/new/'>
                     Create a product
+                  </Nav.Link>
+
+                  <Nav.Link className={`nav-link-${theme}`} disabled>
+                    About us (Coming soon..)
+                  </Nav.Link>
+                  <Nav.Link className={`nav-link-${theme}`} disabled>
+                    FAQ (Coming soon..)
                   </Nav.Link>
                   <Nav.Link className={`nav-link-${theme}`} onClick={logOutUser}>
                     Log Out

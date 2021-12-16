@@ -33,7 +33,7 @@ nav {
 }
 
 .logo-img {
-  width: 5vw;
+  width: 70px;
 }
 
 .navbar-toggler {
@@ -54,7 +54,13 @@ nav {
 }
 
 .theme-btn {
-  margin-right: 5vw;
+  margin-right: 3vw;
+  padding: 0;
+}
+
+.theme-btn-img {
+  width: 40px;
+  height: 40px;
 }
 
 .offcanvas-header-light {
@@ -71,6 +77,7 @@ nav {
   color: #212529;
   background-color: #f8f9fa;
 }
+
 .offcanvas-body-dark {
   background-color: #212529;
   color: #f8f9fa;
@@ -123,6 +130,16 @@ nav {
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: flex-start;
+}
+
+/* LOGIN AND SIGN UP */
+
+.form-input-title-light {
+  color: #212529;
+}
+
+.form-input-title-dark {
+  color: #212529;
 }
 
 /* PROFILE PAGE */
@@ -181,11 +198,13 @@ nav {
 .danger-zone-light  {
   color: #212529;
   background-color: #f8f9fa;
+  margin-bottom: 30px;
 }
 
 .danger-zone-dark {
   background-color: #212529;
   color: #f8f9fa;
+  margin-bottom: 30px;
 }
 
 /* PRODUCT DETAILS PAGE */

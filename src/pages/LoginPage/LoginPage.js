@@ -7,12 +7,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 import { AuthContext } from "../../context/auth.context";
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
-const LoginPage = () => {
+const LoginPage = ({ theme }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -51,13 +52,15 @@ const LoginPage = () => {
         <Col xs={6} className='login-form'>
           <Form onSubmit={handleLoginSubmit}>
             <Form.Group className='mb-3'>
-              <Form.Label>Username</Form.Label>
-              <Form.Control type='text' placeholder='Enter username' name='username' value={username} onChange={handleUsername} />
+              <FloatingLabel controlId='floatingInput' label='Username' className={`mb-3 form-input-title-${theme}`}>
+                <Form.Control type='text' placeholder='Enter username' name='username' value={username} onChange={handleUsername} />
+              </FloatingLabel>
             </Form.Group>
 
             <Form.Group className='mb-3' controlId='formBasicPassword'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control type='password' placeholder='Password' name='password' value={password} onChange={handlePassword} />
+              <FloatingLabel controlId='floatingPassword' label='Password' className={`mb-3 form-input-title-${theme}`}>
+                <Form.Control type='password' placeholder='Password' name='password' value={password} onChange={handlePassword} />
+              </FloatingLabel>
             </Form.Group>
             <Form.Group className='mb-3' controlId='formBasicCheckbox'>
               <Form.Check type='checkbox' label='Remember me' />

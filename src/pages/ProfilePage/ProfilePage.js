@@ -75,7 +75,8 @@ const ProfilePage = ({ theme }) => {
         <Col xs={12}>
           <h2 className='favorites-section-profile-title'>Favorite Products</h2>
           <div className='favorites-section-profile'>
-            {userData && userData.favoriteProducts.map((eachProduct) => <ProductCard eachProduct={eachProduct} theme={theme} />)}
+            {userData &&
+              userData.favoriteProducts.map((eachProduct) => <ProductCard key={eachProduct._id} eachProduct={eachProduct} theme={theme} />)}
           </div>
         </Col>
       </Row>
