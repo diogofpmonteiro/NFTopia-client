@@ -14,14 +14,12 @@ function AuthProviderWrapper({ children }) {
 
   const verifyStoredToken = async () => {
     try {
-      // Get the stored token from the local storage
       const storedToken = localStorage.getItem("authToken");
 
       if (storedToken) {
         const response = await authService.verify();
+        const userData = response.data;
 
-        // If the token is valid, update the state variables
-        const userData = response.data; // coming from payload
         setIsLoggedIn(true);
         setIsLoading(false);
         setUser(userData);
@@ -29,7 +27,6 @@ function AuthProviderWrapper({ children }) {
         setIsLoading(false);
       }
     } catch (error) {
-      // If the token is not validated, or there's another error
       setIsLoggedIn(false);
       setIsLoading(false);
       setUser(null);
@@ -43,11 +40,8 @@ function AuthProviderWrapper({ children }) {
 
   const logOutUser = () => {
     localStorage.removeItem("authToken");
-
-    // Update state variables
     setIsLoggedIn(false);
     setUser(null);
-
     navigate("/");
   };
 

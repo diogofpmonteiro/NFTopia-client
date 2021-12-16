@@ -133,13 +133,13 @@ nav {
   align-items: center;
 }
 
-.cart-section-profile-title {
+.favorites-section-profile-title {
   text-align: center;
   margin-top: 30px;
   margin-bottom: 23px;
 }
 
-.cart-section-profile {
+.favorites-section-profile {
   display: flex;
   flex-wrap: wrap;
   min-height: 50vh;

@@ -104,26 +104,6 @@ const UploadProduct = () => {
       </Row>
       <div></div>
     </Container>
-
-    // <div>
-    //   <h1>Upload a Product to your wallet</h1>
-    //   <form onSubmit={handleFormSubmit}>
-    //     <label>Name:</label>
-    //     <input type='text' name='Name' value={name} onChange={handleName} />
-
-    //     <label>description:</label>
-    //     <input type='text' name='description' value={description} onChange={handleDescription} />
-
-    //     <label>Product Image</label>
-    //     <input type='file' name='imageURL' onChange={handleFileUpload} />
-
-    //     <label>Price:</label>
-    //     <input type='number' name='price' value={price} onChange={handlePrice} />
-
-    //     <button type='submit'>Create Product</button>
-    //   </form>
-    //   {errorMessage && <p className='error-message'>{errorMessage}</p>}
-    // </div>
   );
 };
 

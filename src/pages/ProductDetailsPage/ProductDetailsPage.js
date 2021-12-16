@@ -28,141 +28,76 @@ const getStripe = () => {
 
 const ProductDetailsPage = () => {
   const [product, setProduct] = useState(null);
-
+  const [priceId, setPriceId] = useState("");
   const [stripeError, setStripeError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { productId } = useParams();
-
   const { user } = useContext(AuthContext);
 
-  // let item;
-
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/products/${productId}`);
-        const thisProduct = response.data;
-
-        setProduct(thisProduct);
-
-        // if (response.data.name === "The Birth of Venus") {
-        //   item = {
-        //     price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "The Starry Night") {
-        //   item = {
-        //     price: "price_1K6x3DJXmfQvDPDYcFvGs815",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "The Scream") {
-        //   item = {
-        //     price: "price_1K74DWJXmfQvDPDY2e3LRz2v",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "The Last Supper") {
-        //   item = {
-        //     price: "price_1K74EvJXmfQvDPDYsovWlyjW",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "Sunflowers") {
-        //   item = {
-        //     price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "The Great Wave off Kanagawa") {
-        //   item = {
-        //     price: "price_1K74H8JXmfQvDPDYuGbVLt3X",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "Mona Lisa") {
-        //   item = {
-        //     price: "price_1K74IiJXmfQvDPDYnL2mN0cW",
-        //     quantity: 1,
-        //   };
-        // }
-
-        // console.log(item);
-        // checkoutOptions.lineItems.push(item);
-        // console.log(checkoutOptions);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProduct();
-  }, [productId]);
-
-  const addToCart = async () => {
+  const addToFavorites = async () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const userId = user._id;
 
       const getUserData = await axios.get(`${API_URL}/user/${userId}`, { headers: { Authorization: `Bearer ${authToken}` } });
       const theUser = getUserData.data;
+      const theUserId = theUser._id;
 
-      if (!theUser.cart) {
-        await axios.post(`${API_URL}/api/cart`, { userId }, { headers: { Authorization: `Bearer ${authToken}` } });
-      }
-
-      await axios.put(`${API_URL}/api/cart/${productId}`, { userId }, { headers: { Authorization: `Bearer ${authToken}` } });
+      await axios.post(`${API_URL}/add-favorite/${product._id}`, { theUserId });
     } catch (error) {
       console.log(error);
     }
   };
 
-  // ! WORKING STATIC VERSION
-  const item = {
-    price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
-    quantity: 1,
+  const removeFromFavorites = async () => {
+    try {
+      const authToken = localStorage.getItem("authToken");
+      const userId = user._id;
+
+      const getUserData = await axios.get(`${API_URL}/user/${userId}`, { headers: { Authorization: `Bearer ${authToken}` } });
+      const theUser = getUserData.data;
+      const theUserId = theUser._id;
+
+      await axios.post(`${API_URL}/remove-favorite/${product._id}`, { theUserId });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // const connectProductToCheckout = async () => {
-  //   try {
-  //     if (product.name === "The Birth of Venus") {
-  //       item = {
-  //         price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
-  //         quantity: 1,
-  //       };
-  //     } else if (product.name === "The Starry Night") {
-  //       item = {
-  //         price: "price_1K6x3DJXmfQvDPDYcFvGs815",
-  //         quantity: 1,
-  //       };
-  //     } else if (product.name === "The Scream") {
-  //       item = {
-  //         price: "price_1K74DWJXmfQvDPDY2e3LRz2v",
-  //         quantity: 1,
-  //       };
-  //     } else if (product.name === "The Last Supper") {
-  //       item = {
-  //         price: "price_1K74EvJXmfQvDPDYsovWlyjW",
-  //         quantity: 1,
-  //       };
-  //     } else if (product.name === "Sunflowers") {
-  //       item = {
-  //         price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
-  //         quantity: 1,
-  //       };
-  //     } else if (product.name === "The Great Wave off Kanagawa") {
-  //       item = {
-  //         price: "price_1K74H8JXmfQvDPDYuGbVLt3X",
-  //         quantity: 1,
-  //       };
-  //     } else if (product.name === "Mona Lisa") {
-  //       item = {
-  //         price: "price_1K74IiJXmfQvDPDYnL2mN0cW",
-  //         quantity: 1,
-  //       };
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/products/${productId}`);
+        const thisProduct = response.data;
+        setProduct(thisProduct);
 
-  // setInterval(() => {
-  //   connectProductToCheckout();
-  // }, 3000);
+        if (response.data.name === "The Birth of Venus") {
+          setPriceId("price_1K6x52JXmfQvDPDYRaBP0MXg");
+        } else if (response.data.name === "The Starry Night") {
+          setPriceId("price_1K6x3DJXmfQvDPDYcFvGs815");
+        } else if (response.data.name === "The Scream") {
+          setPriceId("price_1K74DWJXmfQvDPDY2e3LRz2v");
+        } else if (response.data.name === "The Last Supper") {
+          setPriceId("price_1K74EvJXmfQvDPDYsovWlyjW");
+        } else if (response.data.name === "Sunflowers") {
+          setPriceId("price_1K74FwJXmfQvDPDY2aBNNJwC");
+        } else if (response.data.name === "The Great Wave off Kanagawa") {
+          setPriceId("price_1K74H8JXmfQvDPDYuGbVLt3X");
+        } else if (response.data.name === "Mona Lisa") {
+          setPriceId("price_1K74IiJXmfQvDPDYnL2mN0cW");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [productId, priceId]);
+
+  const item = {
+    price: priceId,
+    quantity: 1,
+  };
 
   const checkoutOptions = {
     lineItems: [item],
@@ -170,8 +105,6 @@ const ProductDetailsPage = () => {
     successUrl: `${window.location.origin}/success`,
     cancelUrl: `${window.location.origin}/cancel`,
   };
-
-  console.log(window.location.origin);
 
   const redirectToCheckout = async () => {
     setIsLoading(true);
@@ -201,8 +134,12 @@ const ProductDetailsPage = () => {
               <p> {product.description} </p>
               <p> Price: {product.price}€ </p>
 
-              <Button className='product-btn' variant='secondary' onClick={addToCart}>
+              <Button className='product-btn' variant='secondary' onClick={addToFavorites}>
                 Add to favorites
+              </Button>
+
+              <Button className='product-btn' variant='secondary' onClick={removeFromFavorites}>
+                Remove from favorites
               </Button>
 
               <Button className='product-btn' onClick={redirectToCheckout} variant='secondary'>
