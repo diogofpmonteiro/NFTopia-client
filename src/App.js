@@ -45,7 +45,7 @@ function App() {
 
         {/* Login Route */}
         <Route
-          path='/login'
+          path='login'
           element={
             <IsAnon>
               <LoginPage />
@@ -55,7 +55,7 @@ function App() {
 
         {/* Profile Route */}
         <Route
-          path='/user'
+          path='user'
           element={
             <IsPrivate>
               <ProfilePage />
