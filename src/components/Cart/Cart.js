@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/auth.context";
 
 import ProductCard from "../../components/ProductCard/ProductCard";
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 const Cart = ({ cartId }) => {
   const [productsInCart, setProductsInCart] = useState([]);

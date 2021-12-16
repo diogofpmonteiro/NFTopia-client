@@ -11,6 +11,8 @@ import Spinner from "react-bootstrap/Spinner";
 
 import fileService from "../../services/file.service";
 
+const API_URL = process.env.REACT_APP_SERVER_URL;
+
 const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +45,7 @@ const SignupPage = () => {
       const requestBody = { username, password, profilePictureURL };
 
       const authToken = localStorage.getItem("authToken");
-      await axios.post("http://localhost:5005/auth/signup", requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
+      await axios.post(`${API_URL}/auth/signup`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
 
       // If the request is successful navigate to login page
       navigate("/login");

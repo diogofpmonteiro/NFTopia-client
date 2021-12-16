@@ -13,7 +13,7 @@ import Spinner from "react-bootstrap/Spinner";
 // Stripe import
 import { loadStripe } from "@stripe/stripe-js";
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 // Stripe functionalities
 let stripePromise;
@@ -36,7 +36,7 @@ const ProductDetailsPage = () => {
 
   const { user } = useContext(AuthContext);
 
-  // let item;
+  let item;
 
   useEffect(() => {
     const getProduct = async () => {
@@ -46,42 +46,45 @@ const ProductDetailsPage = () => {
 
         setProduct(thisProduct);
 
-        // if (response.data.name === "The Birth of Venus") {
-        //   item = {
-        //     price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "The Starry Night") {
-        //   item = {
-        //     price: "price_1K6x3DJXmfQvDPDYcFvGs815",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "The Scream") {
-        //   item = {
-        //     price: "price_1K74DWJXmfQvDPDY2e3LRz2v",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "The Last Supper") {
-        //   item = {
-        //     price: "price_1K74EvJXmfQvDPDYsovWlyjW",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "Sunflowers") {
-        //   item = {
-        //     price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "The Great Wave off Kanagawa") {
-        //   item = {
-        //     price: "price_1K74H8JXmfQvDPDYuGbVLt3X",
-        //     quantity: 1,
-        //   };
-        // } else if (response.data.name === "Mona Lisa") {
-        //   item = {
-        //     price: "price_1K74IiJXmfQvDPDYnL2mN0cW",
-        //     quantity: 1,
-        //   };
-        // }
+        if (response.data.name === "The Birth of Venus") {
+          item = {
+            price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
+            quantity: 1,
+          };
+        } else if (response.data.name === "The Starry Night") {
+          item = {
+            price: "price_1K6x3DJXmfQvDPDYcFvGs815",
+            quantity: 1,
+          };
+        } else if (response.data.name === "The Scream") {
+          item = {
+            price: "price_1K74DWJXmfQvDPDY2e3LRz2v",
+            quantity: 1,
+          };
+        } else if (response.data.name === "The Last Supper") {
+          item = {
+            price: "price_1K74EvJXmfQvDPDYsovWlyjW",
+            quantity: 1,
+          };
+        } else if (response.data.name === "Sunflowers") {
+          item = {
+            price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
+            quantity: 1,
+          };
+        } else if (response.data.name === "The Great Wave off Kanagawa") {
+          item = {
+            price: "price_1K74H8JXmfQvDPDYuGbVLt3X",
+            quantity: 1,
+          };
+        } else if (response.data.name === "Mona Lisa") {
+          item = {
+            price: "price_1K74IiJXmfQvDPDYnL2mN0cW",
+            quantity: 1,
+          };
+        }
+        console.log(item);
+        checkoutOptions.lineItems.push(item);
+        console.log(checkoutOptions);
       } catch (error) {
         console.log(error);
       }
@@ -108,10 +111,10 @@ const ProductDetailsPage = () => {
   };
 
   // ! WORKING STATIC VERSION
-  const item = {
-    price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
-    quantity: 1,
-  };
+  // const item = {
+  //   price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
+  //   quantity: 1,
+  // };
 
   // const connectProductToCheckout = async () => {
   //   try {
@@ -161,7 +164,7 @@ const ProductDetailsPage = () => {
   // }, 3000);
 
   const checkoutOptions = {
-    lineItems: [item],
+    lineItems: [],
     mode: "payment",
     successUrl: `${window.location.origin}/success`,
     cancelUrl: `${window.location.origin}/cancel`,

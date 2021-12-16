@@ -20,17 +20,14 @@ class AuthService {
   }
 
   login = async (requestBody) => {
-    // return axios.post("http://localhost:5005/auth/login");
-    return this.api.post("/auth/login", requestBody); // http://localhost:5005 /auth/login
+    return this.api.post("/auth/login", requestBody);
   };
 
   signup = async (requestBody) => {
-    // return axios.post("http://localhost:5005/auth/singup");
     return this.api.post("/auth/signup", requestBody);
   };
 
   verify = async () => {
-    // return axios.post("http://localhost:5005/auth/verify");
     return this.api.get("/auth/verify");
   };
 

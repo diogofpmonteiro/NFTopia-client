@@ -10,6 +10,8 @@ import Button from "react-bootstrap/Button";
 
 import { AuthContext } from "../../context/auth.context";
 
+const API_URL = process.env.REACT_APP_SERVER_URL;
+
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +31,7 @@ const LoginPage = () => {
       const requestBody = { username, password };
 
       const authToken = localStorage.getItem("authToken");
-      const response = await axios.post("http://localhost:5005/auth/login", requestBody, {
+      const response = await axios.post(`${API_URL}/auth/login`, requestBody, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 

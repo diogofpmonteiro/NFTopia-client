@@ -12,7 +12,7 @@ import Button from "react-bootstrap/Button";
 import { AuthContext } from "../../context/auth.context";
 import { ThemeContext } from "./../../context/theme.context";
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 const Header = () => {
   // Get the value from the context
