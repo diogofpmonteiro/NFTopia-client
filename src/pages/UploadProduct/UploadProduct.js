@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 
 import fileService from "../../services/file.service";
 
@@ -18,6 +19,7 @@ const UploadProduct = () => {
   const [productImageURL, setProductImageURL] = useState("");
   const [price, setPrice] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleName = (e) => setName(e.target.value);
   const handleDescription = (e) => setDescription(e.target.value);
@@ -25,6 +27,7 @@ const UploadProduct = () => {
 
   const handleFileUpload = async (e) => {
     try {
+      setIsLoading(true);
       const uploadData = new FormData();
 
       uploadData.append("imageURL", e.target.files[0]); // <-- Set the file in the form
@@ -32,6 +35,7 @@ const UploadProduct = () => {
       const response = await fileService.uploadImage(uploadData);
 
       setProductImageURL(response.data.secure_url);
+      setIsLoading(false);
     } catch (error) {
       setErrorMessage("Failed to upload the file");
     }
@@ -47,7 +51,7 @@ const UploadProduct = () => {
       await axios.post(`${API_URL}/api/products/`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
 
       // If the request is successful navigate to login page
-      navigate("/user");
+      navigate("/");
     } catch (error) {
       // If the request resolves with an error, set the error message in the state
       setErrorMessage("Something went wrong");
@@ -61,7 +65,7 @@ const UploadProduct = () => {
       <Row>
         <Col></Col>
 
-        <Col xs={6} className='centered-column create-product-container'>
+        <Col xs={6} className='create-product-container'>
           <Form onSubmit={handleFormSubmit} style={{ marginBottom: "20vh" }}>
             <Form.Group className='mb-3'>
               <Form.Label>Product Name</Form.Label>
@@ -89,8 +93,8 @@ const UploadProduct = () => {
               <Form.Control type='number' placeholder='Enter product price' name='price' value={price} onChange={handlePrice} />
             </Form.Group>
 
-            <Button variant='secondary' type='submit'>
-              Create Product
+            <Button variant='secondary' type='submit' disabled={isLoading}>
+              {isLoading ? <Spinner animation='border' size='sm' role='status' /> : "Create Product"}
             </Button>
             {errorMessage && <p className='error-message'>{errorMessage}</p>}
           </Form>

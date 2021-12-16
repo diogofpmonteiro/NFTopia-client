@@ -62,8 +62,8 @@ const HomePage = () => {
         <section className='recently-listed-section'>
           {/* NEEDS TO BE SORTED BY TIMESTAMP */}
           {sortedProducts.map((eachProduct) => (
-            <div className='recently-listed-cards'>
-              <ProductCard eachProduct={eachProduct} key={eachProduct._id} />
+            <div className='recently-listed-cards' key={eachProduct._id}>
+              <ProductCard eachProduct={eachProduct} />
             </div>
           ))}
         </section>

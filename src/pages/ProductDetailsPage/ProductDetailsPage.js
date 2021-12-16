@@ -1,15 +1,14 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-import { ThemeContext } from "./../../context/theme.context";
 import { AuthContext } from "../../context/auth.context";
 
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 
 // Stripe import
 import { loadStripe } from "@stripe/stripe-js";
@@ -29,15 +28,12 @@ const getStripe = () => {
 
 const ProductDetailsPage = () => {
   const [product, setProduct] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
   const [stripeError, setStripeError] = useState(null);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { productId } = useParams();
-  const { theme } = useContext(ThemeContext);
-  const { user } = useContext(AuthContext);
 
-  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -53,51 +49,89 @@ const ProductDetailsPage = () => {
     getProduct();
   }, [productId]);
 
-  const deleteProduct = async () => {
-    try {
-      const authToken = localStorage.getItem("authToken");
-      await axios.delete(`${API_URL}/api/products/${productId}`, { headers: { Authorization: `Bearer ${authToken}` } });
-
-      navigate("/");
-    } catch (error) {
-      setErrorMessage("Something went wrong!");
-    }
-  };
-
   const addToCart = async () => {
     try {
       const authToken = localStorage.getItem("authToken");
-
       const userId = user._id;
 
-      // console.log(user);
-      const respUser = await axios.get(`${API_URL}/user/${userId}`, { headers: { Authorization: `Bearer ${authToken}` } });
-      console.log(respUser.data);
-
-      const theUser = respUser.data;
-      // console.log("the user id", theUser);
+      const getUserData = await axios.get(`${API_URL}/user/${userId}`, { headers: { Authorization: `Bearer ${authToken}` } });
+      const theUser = getUserData.data;
 
       if (!theUser.cart) {
-        const response = await axios.post(`${API_URL}/api/cart`, { userId }, { headers: { Authorization: `Bearer ${authToken}` } });
-        console.log(response.data);
+        await axios.post(`${API_URL}/api/cart`, { userId }, { headers: { Authorization: `Bearer ${authToken}` } });
       }
 
-      const response = await axios.put(
-        `${API_URL}/api/cart/${productId}`,
-        { userId },
-        { headers: { Authorization: `Bearer ${authToken}` } }
-      );
-      console.log(response.data);
+      await axios.put(`${API_URL}/api/cart/${productId}`, { userId }, { headers: { Authorization: `Bearer ${authToken}` } });
     } catch (error) {
       console.log(error);
     }
   };
 
-  // Stripe functionalities
+  // ! WORKING STATIC VERSION
   const item = {
-    price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
+    price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
     quantity: 1,
   };
+
+  // const item = () => {
+  //   if (product.name === "The Birth of Venus")
+  //     return {
+  //       price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
+  //       quantity: 1,
+  //     };
+  //   if (product.name === "Sunflowers")
+  //     return {
+  //       price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
+  //       quantity: 1,
+  //     };
+  // };
+
+  // const connectProductToCheckout = async () => {
+  //   try {
+  //     if (product.name === "The Birth of Venus") {
+  //       item = {
+  //         price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
+  //         quantity: 1,
+  //       };
+  //     } else if (product.name === "The Starry Night") {
+  //       item = {
+  //         price: "price_1K6x3DJXmfQvDPDYcFvGs815",
+  //         quantity: 1,
+  //       };
+  //     } else if (product.name === "The Scream") {
+  //       item = {
+  //         price: "price_1K74DWJXmfQvDPDY2e3LRz2v",
+  //         quantity: 1,
+  //       };
+  //     } else if (product.name === "The Last Supper") {
+  //       item = {
+  //         price: "price_1K74EvJXmfQvDPDYsovWlyjW",
+  //         quantity: 1,
+  //       };
+  //     } else if (product.name === "Sunflowers") {
+  //       item = {
+  //         price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
+  //         quantity: 1,
+  //       };
+  //     } else if (product.name === "The Great Wave off Kanagawa") {
+  //       item = {
+  //         price: "price_1K74H8JXmfQvDPDYuGbVLt3X",
+  //         quantity: 1,
+  //       };
+  //     } else if (product.name === "Mona Lisa") {
+  //       item = {
+  //         price: "price_1K74IiJXmfQvDPDYnL2mN0cW",
+  //         quantity: 1,
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // setInterval(() => {
+  //   connectProductToCheckout();
+  // }, 3000);
 
   const checkoutOptions = {
     lineItems: [item],
@@ -107,15 +141,13 @@ const ProductDetailsPage = () => {
   };
 
   const redirectToCheckout = async () => {
-    setLoading(true);
-    console.log("redirectToCheckout");
+    setIsLoading(true);
 
     const stripe = await getStripe();
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
-    console.log("Stripe checkout error", error);
 
+    setIsLoading(false);
     if (error) setStripeError(error.message);
-    setLoading(false);
   };
 
   if (stripeError) alert(stripeError);
@@ -123,7 +155,11 @@ const ProductDetailsPage = () => {
   return (
     <Container>
       <Row>
-        <Col></Col>
+        <Col>
+          <Link to={`/${productId}/edit`}>
+            <Button variant='secondary'>Edit Product</Button>
+          </Link>
+        </Col>
         <Col xs={8}>
           {product && (
             <div className='product-details-container'>
@@ -136,33 +172,11 @@ const ProductDetailsPage = () => {
                 Add to favorites
               </Button>
 
-              <Button className='product-btn' onClick={redirectToCheckout} disabled={isLoading} variant='success'>
-                {isLoading ? "Loading..." : "Buy"}
+              <Button className='product-btn' onClick={redirectToCheckout} variant='secondary'>
+                {isLoading ? <Spinner animation='border' size='sm' role='status' /> : "Buy"}
               </Button>
             </div>
           )}
-        </Col>
-        <Col></Col>
-      </Row>
-      <Row>
-        <Col>
-          <Link to={`/${productId}/edit`}>
-            <Button variant='secondary'>Edit Product</Button>
-          </Link>
-        </Col>
-        <Col xs={8}>
-          <Card border='danger' className={`danger-zone-${theme}`}>
-            <Card.Header>Delete Account Zone</Card.Header>
-            <Card.Body>
-              <Card.Text>
-                Be careful, this action will delete this product from the database. <br /> Click only if 100% sure.
-              </Card.Text>
-              <Button variant='danger' type='submit' onClick={deleteProduct}>
-                Delete Product
-              </Button>
-            </Card.Body>
-            {errorMessage && <p className='error-message'>{errorMessage}</p>}
-          </Card>
         </Col>
         <Col></Col>
       </Row>

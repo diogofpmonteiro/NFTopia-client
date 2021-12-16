@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 
 import fileService from "../../services/file.service";
 
@@ -14,6 +15,7 @@ const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [profilePictureURL, setProfilePictureURL] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -23,10 +25,12 @@ const SignupPage = () => {
 
   const handleFileUpload = async (e) => {
     try {
+      setIsLoading(true);
       const uploadData = new FormData();
       uploadData.append("imageURL", e.target.files[0]); // <-- Set the file in the form
       const response = await fileService.uploadImage(uploadData);
       setProfilePictureURL(response.data.secure_url);
+      setIsLoading(false);
     } catch (error) {
       setErrorMessage("Failed to upload the file");
     }
@@ -72,8 +76,8 @@ const SignupPage = () => {
               <Form.Control type='file' size='sm' onChange={handleFileUpload} />
             </Form.Group>
 
-            <Button variant='secondary' type='submit'>
-              Sign up
+            <Button variant='secondary' type='submit' disabled={isLoading}>
+              {isLoading ? <Spinner animation='border' size='sm' role='status' /> : "Sign-up"}
             </Button>
           </Form>
           {errorMessage && <p className='error-message'>{errorMessage}</p>}

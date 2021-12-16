@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 
 import fileService from "../../services/file.service";
 
@@ -16,10 +17,9 @@ const EditProfile = () => {
   const [username, setUsername] = useState("");
   const [profilePictureURL, setProfilePictureURL] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  // const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,12 +35,14 @@ const EditProfile = () => {
 
   const handleFileUpload = async (e) => {
     try {
+      setIsLoading(true);
       const uploadData = new FormData();
 
       uploadData.append("imageURL", e.target.files[0]); // <-- Set the file in the form
 
       const response = await fileService.uploadImage(uploadData);
       setProfilePictureURL(response.data.secure_url);
+      setIsLoading(false);
     } catch (error) {
       setErrorMessage("Failed to upload the file");
     }
@@ -68,7 +70,7 @@ const EditProfile = () => {
       <Row>
         <Col></Col>
 
-        <Col xs={6} className='centered-column edit-profile-container'>
+        <Col xs={6} className='edit-profile-container'>
           <Form onSubmit={handleFormSubmit} style={{ marginBottom: "20vh" }}>
             <Form.Group className='mb-3'>
               <Form.Label>Username</Form.Label>
@@ -80,8 +82,8 @@ const EditProfile = () => {
               <Form.Control type='file' size='sm' onChange={handleFileUpload} />
             </Form.Group>
 
-            <Button variant='secondary' type='submit'>
-              Update Profile
+            <Button variant='secondary' type='submit' disabled={isLoading}>
+              {isLoading ? <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' /> : "Update Profile"}
             </Button>
             {errorMessage && <p className='error-message'>{errorMessage}</p>}
           </Form>
