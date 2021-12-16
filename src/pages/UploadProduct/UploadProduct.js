@@ -48,7 +48,7 @@ const UploadProduct = () => {
       const requestBody = { name, description, productImageURL, price };
 
       const authToken = localStorage.getItem("authToken");
-      await axios.post(`${API_URL}/api/products/`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
+      await axios.post(`${API_URL}/api/products`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
 
       // If the request is successful navigate to login page
       navigate("/");
