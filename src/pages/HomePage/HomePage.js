@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
-import { ThemeContext } from "./../../context/theme.context";
+import { useState, useEffect } from "react";
 
 import ProductCard from "./../../components/ProductCard/ProductCard";
 
@@ -12,10 +11,8 @@ import Button from "react-bootstrap/Button";
 const API_URL = process.env.REACT_APP_SERVER_URL;
 const mainPageImage = "/images/main-img.jpeg";
 
-const HomePage = () => {
+const HomePage = ({ theme }) => {
   const [products, setProducts] = useState([]);
-
-  const { theme } = useContext(ThemeContext);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -63,7 +60,7 @@ const HomePage = () => {
           {/* NEEDS TO BE SORTED BY TIMESTAMP */}
           {sortedProducts.map((eachProduct) => (
             <div className='recently-listed-cards' key={eachProduct._id}>
-              <ProductCard eachProduct={eachProduct} />
+              <ProductCard eachProduct={eachProduct} theme={theme} />
             </div>
           ))}
         </section>
@@ -76,7 +73,7 @@ const HomePage = () => {
             </h2>
             <section className='all-products-section'>
               {products.map((eachProduct) => (
-                <ProductCard eachProduct={eachProduct} key={eachProduct._id} />
+                <ProductCard eachProduct={eachProduct} key={eachProduct._id} theme={theme} />
               ))}
             </section>
           </Col>

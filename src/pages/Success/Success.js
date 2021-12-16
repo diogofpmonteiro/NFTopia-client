@@ -1,4 +1,4 @@
-const Success = () => {
+const Success = ({ theme }) => {
   return (
     <div className='success-page'>
       <h1>Payment process was successful!</h1>

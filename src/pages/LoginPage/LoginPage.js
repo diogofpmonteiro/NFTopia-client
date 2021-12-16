@@ -17,7 +17,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  // Get the function for saving and verifying the token
   const { logInUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -35,13 +34,11 @@ const LoginPage = () => {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
-      // Save the token and set the user as logged in ...
       const token = response.data.authToken;
       logInUser(token);
 
       navigate("/");
     } catch (error) {
-      // If the request resolves with an error, set the error message in the state
       setErrorMessage("Something went wrong");
     }
   };

@@ -1,6 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
+import { useState } from "react";
+
 import Navbar from "./components/Navbar/Navbar";
 
 import IsPrivate from "./components/IsPrivate/IsPrivate";
@@ -18,27 +20,33 @@ import Success from "./pages/Success/Success";
 import Cancel from "./pages/Cancel/Cancel";
 import EditProductPage from "./pages/EditProductPage/EditProductPage";
 
-import { ThemeContext } from "./context/theme.context";
-import { useContext } from "react";
-
 import "@stripe/stripe-js";
 
 function App() {
-  const { theme } = useContext(ThemeContext);
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
+
   return (
     <div className={`App-${theme}`}>
-      <Navbar />
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
 
       <Routes>
         {/* Home Route */}
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={<HomePage theme={theme} />} />
 
         {/* Signup Route */}
         <Route
           path='/signup'
           element={
             <IsAnon>
-              <SignupPage />
+              <SignupPage theme={theme} />
             </IsAnon>
           }
         />
@@ -48,7 +56,7 @@ function App() {
           path='/login'
           element={
             <IsAnon>
-              <LoginPage />
+              <LoginPage theme={theme} />
             </IsAnon>
           }
         />
@@ -58,7 +66,7 @@ function App() {
           path='/user'
           element={
             <IsPrivate>
-              <ProfilePage />
+              <ProfilePage theme={theme} />
             </IsPrivate>
           }
         />
@@ -68,7 +76,7 @@ function App() {
           path='/user/edit'
           element={
             <IsPrivate>
-              <EditProfile />
+              <EditProfile theme={theme} />
             </IsPrivate>
           }
         />
@@ -78,7 +86,7 @@ function App() {
           path='/:productId'
           element={
             <IsPrivate>
-              <ProductDetailsPage />
+              <ProductDetailsPage theme={theme} />
             </IsPrivate>
           }
         />
@@ -88,7 +96,7 @@ function App() {
           path='/success'
           element={
             <IsPrivate>
-              <Success />
+              <Success theme={theme} />
             </IsPrivate>
           }
         />
@@ -98,7 +106,7 @@ function App() {
           path='/cancel'
           element={
             <IsPrivate>
-              <Cancel />
+              <Cancel theme={theme} />
             </IsPrivate>
           }
         />
@@ -108,7 +116,7 @@ function App() {
           path='/products/new'
           element={
             <IsPrivate>
-              <UploadProduct />
+              <UploadProduct theme={theme} />
             </IsPrivate>
           }
         />
@@ -118,13 +126,13 @@ function App() {
           path='/:productId/edit'
           element={
             <IsPrivate>
-              <EditProductPage />
+              <EditProductPage theme={theme} />
             </IsPrivate>
           }
         />
 
         {/* Error Route */}
-        <Route path='*' element={<ErrorPage />} />
+        <Route path='*' element={<ErrorPage theme={theme} />} />
       </Routes>
     </div>
   );

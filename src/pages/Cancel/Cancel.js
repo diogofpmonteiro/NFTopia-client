@@ -1,4 +1,4 @@
-const Cancel = () => {
+const Cancel = ({ theme }) => {
   return (
     <div className='cancel-page'>
       <h1>Payment process canceled.</h1>

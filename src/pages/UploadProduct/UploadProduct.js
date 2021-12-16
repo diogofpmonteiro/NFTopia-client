@@ -13,7 +13,7 @@ import fileService from "../../services/file.service";
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
-const UploadProduct = () => {
+const UploadProduct = ({ theme }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [productImageURL, setProductImageURL] = useState("");
@@ -30,7 +30,7 @@ const UploadProduct = () => {
       setIsLoading(true);
       const uploadData = new FormData();
 
-      uploadData.append("imageURL", e.target.files[0]); // <-- Set the file in the form
+      uploadData.append("imageURL", e.target.files[0]);
 
       const response = await fileService.uploadImage(uploadData);
 
@@ -44,16 +44,13 @@ const UploadProduct = () => {
   const handleFormSubmit = async (e) => {
     try {
       e.preventDefault();
-      // Create an object representing the request body
       const requestBody = { name, description, productImageURL, price };
 
       const authToken = localStorage.getItem("authToken");
       await axios.post(`${API_URL}/api/products/`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
 
-      // If the request is successful navigate to login page
       navigate("/");
     } catch (error) {
-      // If the request resolves with an error, set the error message in the state
       console.log(error);
       setErrorMessage("Something went wrong");
     }
@@ -61,10 +58,18 @@ const UploadProduct = () => {
 
   const navigate = useNavigate();
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Container>
       <Row>
-        <Col></Col>
+        <Col>
+          <Button onClick={goBack} variant='secondary'>
+            Go back
+          </Button>
+        </Col>
 
         <Col xs={6} className='create-product-container'>
           <Form onSubmit={handleFormSubmit} style={{ marginBottom: "20vh" }}>

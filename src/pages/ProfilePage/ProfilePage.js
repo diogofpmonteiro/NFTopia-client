@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/auth.context";
 
@@ -13,10 +13,12 @@ import Button from "react-bootstrap/Button";
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
-const ProfilePage = () => {
+const ProfilePage = ({ theme }) => {
   const [username, setUsername] = useState("");
   const [profilePictureURL, setProfilePictureURL] = useState("");
   const [userData, setUserData] = useState(null);
+
+  const navigate = useNavigate();
 
   const { logOutUser } = useContext(AuthContext);
 
@@ -37,10 +39,18 @@ const ProfilePage = () => {
     }
   }, []);
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Container>
       <Row>
-        <Col></Col>
+        <Col>
+          <Button onClick={goBack} variant='secondary'>
+            Go back
+          </Button>
+        </Col>
         <Col xs={8}>
           <div className='profile-top'>
             <img src={profilePictureURL} alt='pfp' className='profile-pic' />
@@ -64,7 +74,9 @@ const ProfilePage = () => {
       <Row>
         <Col xs={12}>
           <h2 className='favorites-section-profile-title'>Favorite Products</h2>
-          <div>{userData && userData.favoriteProducts.map((eachProduct) => <ProductCard eachProduct={eachProduct} />)}</div>
+          <div className='favorites-section-profile'>
+            {userData && userData.favoriteProducts.map((eachProduct) => <ProductCard eachProduct={eachProduct} theme={theme} />)}
+          </div>
         </Col>
       </Row>
     </Container>

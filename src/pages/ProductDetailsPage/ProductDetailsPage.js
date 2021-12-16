@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/auth.context";
 
@@ -26,7 +26,7 @@ const getStripe = () => {
   return stripePromise;
 };
 
-const ProductDetailsPage = () => {
+const ProductDetailsPage = ({ theme }) => {
   const [product, setProduct] = useState(null);
   const [priceId, setPriceId] = useState("");
   const [stripeError, setStripeError] = useState(null);
@@ -34,6 +34,8 @@ const ProductDetailsPage = () => {
 
   const { productId } = useParams();
   const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const addToFavorites = async () => {
     try {
@@ -118,18 +120,26 @@ const ProductDetailsPage = () => {
 
   if (stripeError) alert(stripeError);
 
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
     <Container>
       <Row>
         <Col>
           <Link to={`/${productId}/edit`}>
-            <Button variant='secondary'>Edit Product</Button>
+            <Button style={{ marginBottom: "10px" }} variant='secondary'>
+              Edit Product
+            </Button>
           </Link>
+          <Button onClick={goBack} variant='secondary'>
+            Go back
+          </Button>
         </Col>
         <Col xs={8}>
           {product && (
             <div className='product-details-container'>
-              <h2> {product.name} </h2>
+              <h2 className='product-title'> {product.name} </h2>
               <img className='product-details-img' src={product.productImageURL} alt='painting' />
               <p> {product.description} </p>
               <p> Price: {product.price}€ </p>

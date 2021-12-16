@@ -13,7 +13,7 @@ import fileService from "../../services/file.service";
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
-const SignupPage = () => {
+const SignupPage = ({ theme }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [profilePictureURL, setProfilePictureURL] = useState("");
@@ -29,7 +29,7 @@ const SignupPage = () => {
     try {
       setIsLoading(true);
       const uploadData = new FormData();
-      uploadData.append("imageURL", e.target.files[0]); // <-- Set the file in the form
+      uploadData.append("imageURL", e.target.files[0]);
       const response = await fileService.uploadImage(uploadData);
       setProfilePictureURL(response.data.secure_url);
       setIsLoading(false);
@@ -41,16 +41,13 @@ const SignupPage = () => {
   const handleSignupSubmit = async (e) => {
     try {
       e.preventDefault();
-      // Create an object representing the request body
       const requestBody = { username, password, profilePictureURL };
 
       const authToken = localStorage.getItem("authToken");
       await axios.post(`${API_URL}/auth/signup`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
 
-      // If the request is successful navigate to login page
       navigate("/login");
     } catch (error) {
-      // If the request resolves with an error, set the error message in the state
       setErrorMessage("Something went wrong");
     }
   };
@@ -70,7 +67,7 @@ const SignupPage = () => {
             <Form.Group className='mb-3' controlId='formBasicPassword'>
               <Form.Label>Password</Form.Label>
               <Form.Control type='password' placeholder='Password' name='password' value={password} onChange={handlePassword} />
-              <Form.Text className='text-muted'>Your password needs to have -- password requirements --.</Form.Text>
+              <Form.Text className='text-muted'>(Capital letter, number, symbol, min. 6 characters)</Form.Text>
             </Form.Group>
 
             <Form.Group controlId='formFileSm' className='mb-3'>

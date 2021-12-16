@@ -3,11 +3,7 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-import { ThemeContext } from "./../../context/theme.context";
-import { useContext } from "react";
-
-const ProductCard = ({ eachProduct }) => {
-  const { theme } = useContext(ThemeContext);
+const ProductCard = ({ eachProduct, theme }) => {
   return (
     <Card className={`card-${theme}`} key={eachProduct._id}>
       <Card.Img variant='top' src={eachProduct.productImageURL} />

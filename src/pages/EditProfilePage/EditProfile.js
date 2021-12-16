@@ -13,7 +13,7 @@ import fileService from "../../services/file.service";
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
-const EditProfile = () => {
+const EditProfile = ({ theme }) => {
   const [username, setUsername] = useState("");
   const [profilePictureURL, setProfilePictureURL] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -65,10 +65,18 @@ const EditProfile = () => {
     }
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Container>
       <Row>
-        <Col></Col>
+        <Col>
+          <Button onClick={goBack} variant='secondary'>
+            Go back
+          </Button>
+        </Col>
 
         <Col xs={6} className='edit-profile-container'>
           <Form onSubmit={handleFormSubmit} style={{ marginBottom: "20vh" }}>
@@ -88,7 +96,6 @@ const EditProfile = () => {
             {errorMessage && <p className='error-message'>{errorMessage}</p>}
           </Form>
         </Col>
-
         <Col></Col>
       </Row>
     </Container>

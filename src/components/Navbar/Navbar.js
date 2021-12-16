@@ -5,22 +5,18 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Offcanvas from "react-bootstrap/Offcanvas";
-// import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+// import Form from "react-bootstrap/Form";
 // import FormControl from "react-bootstrap/FormControl";
 
 import { AuthContext } from "../../context/auth.context";
-import { ThemeContext } from "./../../context/theme.context";
 
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
-const Header = () => {
-  // Get the value from the context
+const Header = ({ theme, toggleTheme }) => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [profilePictureURL, setProfilePictureURL] = useState("");
-
-  const { theme, toggleTheme } = useContext(ThemeContext);
 
   useEffect(() => {
     try {

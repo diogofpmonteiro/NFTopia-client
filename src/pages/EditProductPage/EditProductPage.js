@@ -12,11 +12,9 @@ import Spinner from "react-bootstrap/Spinner";
 
 import fileService from "../../services/file.service";
 
-import { ThemeContext } from "./../../context/theme.context";
-
 const API_URL = process.env.REACT_APP_SERVER_URL;
 
-const EditProductPage = () => {
+const EditProductPage = ({ theme }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -25,10 +23,7 @@ const EditProductPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { productId } = useParams();
-  const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
-
-  // const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,10 +84,17 @@ const EditProductPage = () => {
     }
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
     <Container>
       <Row>
-        <Col></Col>
+        <Col>
+          <Button onClick={goBack} variant='secondary'>
+            Go back
+          </Button>
+        </Col>
 
         <Col xs={6} className='edit-product-column'>
           <Form onSubmit={handleFormSubmit}>
