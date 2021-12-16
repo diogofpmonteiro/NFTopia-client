@@ -28,12 +28,15 @@ const getStripe = () => {
 
 const ProductDetailsPage = () => {
   const [product, setProduct] = useState(null);
+
   const [stripeError, setStripeError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { productId } = useParams();
 
   const { user } = useContext(AuthContext);
+
+  // let item;
 
   useEffect(() => {
     const getProduct = async () => {
@@ -42,6 +45,43 @@ const ProductDetailsPage = () => {
         const thisProduct = response.data;
 
         setProduct(thisProduct);
+
+        // if (response.data.name === "The Birth of Venus") {
+        //   item = {
+        //     price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
+        //     quantity: 1,
+        //   };
+        // } else if (response.data.name === "The Starry Night") {
+        //   item = {
+        //     price: "price_1K6x3DJXmfQvDPDYcFvGs815",
+        //     quantity: 1,
+        //   };
+        // } else if (response.data.name === "The Scream") {
+        //   item = {
+        //     price: "price_1K74DWJXmfQvDPDY2e3LRz2v",
+        //     quantity: 1,
+        //   };
+        // } else if (response.data.name === "The Last Supper") {
+        //   item = {
+        //     price: "price_1K74EvJXmfQvDPDYsovWlyjW",
+        //     quantity: 1,
+        //   };
+        // } else if (response.data.name === "Sunflowers") {
+        //   item = {
+        //     price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
+        //     quantity: 1,
+        //   };
+        // } else if (response.data.name === "The Great Wave off Kanagawa") {
+        //   item = {
+        //     price: "price_1K74H8JXmfQvDPDYuGbVLt3X",
+        //     quantity: 1,
+        //   };
+        // } else if (response.data.name === "Mona Lisa") {
+        //   item = {
+        //     price: "price_1K74IiJXmfQvDPDYnL2mN0cW",
+        //     quantity: 1,
+        //   };
+        // }
       } catch (error) {
         console.log(error);
       }
@@ -72,19 +112,6 @@ const ProductDetailsPage = () => {
     price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
     quantity: 1,
   };
-
-  // const item = () => {
-  //   if (product.name === "The Birth of Venus")
-  //     return {
-  //       price: "price_1K6x52JXmfQvDPDYRaBP0MXg",
-  //       quantity: 1,
-  //     };
-  //   if (product.name === "Sunflowers")
-  //     return {
-  //       price: "price_1K74FwJXmfQvDPDY2aBNNJwC",
-  //       quantity: 1,
-  //     };
-  // };
 
   // const connectProductToCheckout = async () => {
   //   try {
