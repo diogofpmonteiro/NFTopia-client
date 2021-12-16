@@ -48,12 +48,13 @@ const UploadProduct = () => {
       const requestBody = { name, description, productImageURL, price };
 
       const authToken = localStorage.getItem("authToken");
-      await axios.post(`${API_URL}/api/products`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
+      await axios.post(`${API_URL}/api/products/`, requestBody, { headers: { Authorization: `Bearer ${authToken}` } });
 
       // If the request is successful navigate to login page
       navigate("/");
     } catch (error) {
       // If the request resolves with an error, set the error message in the state
+      console.log(error);
       setErrorMessage("Something went wrong");
     }
   };
