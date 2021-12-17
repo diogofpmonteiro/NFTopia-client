@@ -129,7 +129,6 @@ nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: flex-start;
 }
 
 /* LOGIN AND SIGN UP */
@@ -172,6 +171,7 @@ nav {
 }
 
 .card-dark {
+  display: flex;
   width: 17rem;
   margin-bottom: 3vh;
   word-wrap: normal;
@@ -186,6 +186,12 @@ nav {
   word-wrap: normal;
   color: #212529;
   background-color: #f8f9fa;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 /* EDIT PRODUCT PAGE */
